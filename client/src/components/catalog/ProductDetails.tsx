@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../Model/Product";
 import {
@@ -12,6 +12,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import agent from "../../app/api/agent";
 
 function ProductDetails() {
   const { id } = useParams<{ id: string }>();
@@ -19,11 +20,12 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`https://localhost:5000/api/Products/${id}`)
-      .then((Res) => setProduct(Res.data))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+    id &&
+      agent.catalog
+        .details(parseInt(id))
+        .then((Res) => setProduct(Res))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <h3>Loading.....</h3>;

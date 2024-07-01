@@ -8,7 +8,6 @@ import {
   createTheme,
 } from "@mui/material";
 import Header from "../components/Header";
-import Catalog from "../components/Catalog";
 import { Outlet } from "react-router-dom";
 
 function App() {
